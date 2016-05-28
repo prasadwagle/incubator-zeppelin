@@ -62,10 +62,10 @@ matrix:
 
 before_install:
   - "ls -la .spark-dist"
-  - mkdir -p ~/R
-  - echo 'R_LIBS=~/R' > ~/.Renviron
-  - R -e "install.packages('knitr', repos = 'http://cran.us.r-project.org', lib='~/R')"
-  - export R_LIBS='~/R'
+#  - mkdir -p ~/R
+#  - echo 'R_LIBS=~/R' > ~/.Renviron
+#  - R -e "install.packages('knitr', repos = 'http://cran.us.r-project.org', lib='~/R')"
+#  - export R_LIBS='~/R'
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 
