@@ -61,39 +61,38 @@ matrix:
       env: TEST_SELENIUM="true" SPARK_VER="1.6.1" HADOOP_VER="2.3" PROFILE="-Pspark-1.6 -Phadoop-2.3 -Ppyspark" BUILD_FLAG="package -DskipTests" TEST_FLAG="verify" TEST_PROJECTS="-pl zeppelin-interpreter,zeppelin-zengine,zeppelin-server,zeppelin-display,spark-dependencies,spark -Dtest=org.apache.zeppelin.AbstractFunctionalSuite -DfailIfNoTests=false"
 
 before_install:
-  #- "ls -la .spark-dist"
-  #- mkdir -p ~/R
-  #- echo 'R_LIBS=~/R' > ~/.Renviron
-  #- R -e "install.packages('knitr', repos = 'http://cran.us.r-project.org', lib='~/R')"
-  #- export R_LIBS='~/R'
-  #- "export DISPLAY=:99.0"
-  #- "sh -e /etc/init.d/xvfb start"
+  - "ls -la .spark-dist"
+  - mkdir -p ~/R
+  - echo 'R_LIBS=~/R' > ~/.Renviron
+  - R -e "install.packages('knitr', repos = 'http://cran.us.r-project.org', lib='~/R')"
+  - export R_LIBS='~/R'
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
 
 install:
-  #- mvn $BUILD_FLAG $PROFILE -B
+  - mvn $BUILD_FLAG $PROFILE -B
 
 before_script:
-  - echo "hi"
-  #- travis_retry ./testing/downloadSpark.sh $SPARK_VER $HADOOP_VER
-  #- ./testing/startSparkCluster.sh $SPARK_VER $HADOOP_VER
-  #- echo "export SPARK_HOME=`pwd`/spark-$SPARK_VER-bin-hadoop$HADOOP_VER" > conf/zeppelin-env.sh
-  #- tail conf/zeppelin-env.sh
+  - travis_retry ./testing/downloadSpark.sh $SPARK_VER $HADOOP_VER
+  - ./testing/startSparkCluster.sh $SPARK_VER $HADOOP_VER
+  - echo "export SPARK_HOME=`pwd`/spark-$SPARK_VER-bin-hadoop$HADOOP_VER" > conf/zeppelin-env.sh
+  - tail conf/zeppelin-env.sh
 
 script:
-  #- mvn $TEST_FLAG $PROFILE -B $TEST_PROJECTS
+  - mvn $TEST_FLAG $PROFILE -B $TEST_PROJECTS
 
 
 after_success:
-  #- echo "Travis exited with ${TRAVIS_TEST_RESULT}"
+  - echo "Travis exited with ${TRAVIS_TEST_RESULT}"
 
 after_failure:
-  #- echo "Travis exited with ${TRAVIS_TEST_RESULT}"
-  #- cat target/rat.txt
-  #- cat zeppelin-server/target/rat.txt
-  #- cat zeppelin-distribution/target/zeppelin-*-SNAPSHOT/zeppelin-*-SNAPSHOT/logs/zeppelin*.log
-  #- cat zeppelin-distribution/target/zeppelin-*-SNAPSHOT/zeppelin-*-SNAPSHOT/logs/zeppelin*.out
-  #- cat zeppelin-web/npm-debug.log
+  - echo "Travis exited with ${TRAVIS_TEST_RESULT}"
+  - cat target/rat.txt
+  - cat zeppelin-server/target/rat.txt
+  - cat zeppelin-distribution/target/zeppelin-*-SNAPSHOT/zeppelin-*-SNAPSHOT/logs/zeppelin*.log
+  - cat zeppelin-distribution/target/zeppelin-*-SNAPSHOT/zeppelin-*-SNAPSHOT/logs/zeppelin*.out
+  - cat zeppelin-web/npm-debug.log
 
 after_script:
-  #- ./testing/stopSparkCluster.sh $SPARK_VER $HADOOP_VER
+  - ./testing/stopSparkCluster.sh $SPARK_VER $HADOOP_VER
 
